@@ -13,15 +13,21 @@ def sendRequest(busStop):
     return urllib2.urlopen("http://abdulwahaab.ca/octranspo/index.php?busNo="+str(busStop)).read()
 
 def busSchedule(data):
-    for bus in data['GetRouteSummaryForStopResult']['Routes']['Route']:
-        if 'Trips' in bus and len(bus['Trips']) > 0:
-            print "\033[1;4;32mRoute " + str(bus['RouteNo']) + "\033[0m"
-            for trip in range(len(bus['Trips'])):
-                try:
-                    print "\033[32mTrip Destination: \033[0m" + bus['Trips'][trip]['TripDestination']
-                    print "\033[32mAdjusted Schedule Time: \033[0m " + bus['Trips'][trip]['AdjustedScheduleTime'] + " minutes"
-                except:
-                    print trip
+    if 'Trips' in data['GetRouteSummaryForStopResult']['Routes']['Route']:
+        for trip in data['GetRouteSummaryForStopResult']['Routes']['Route']['Trips']['Trip']:
+            print "\033[32mTrip Destination: \033[0m" + trip['TripDestination']
+            print "\033[32mAdjusted Schedule Time: \033[0m " + trip['AdjustedScheduleTime'] + " minutes"
+    else:
+        for bus in data['GetRouteSummaryForStopResult']['Routes']['Route']:
+            print bus
+            if 'Trips' in bus and len(bus['Trips']) > 0:
+                print "\033[1;4;32mRoute " + str(bus['RouteNo']) + "\033[0m"
+                for trip in range(len(bus['Trips'])):
+                    try:
+                        print "\033[32mTrip Destination: \033[0m" + bus['Trips'][trip]['TripDestination']
+                        print "\033[32mAdjusted Schedule Time: \033[0m " + bus['Trips'][trip]['AdjustedScheduleTime'] + " minutes"
+                    except:
+                        print trip
 
 
 def main():
