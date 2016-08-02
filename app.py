@@ -29,7 +29,7 @@ def busSchedule(data):
 
 
 def main():
-    busStop = ""
+    jdata = ""
     try:
         jdata = sendRequest(sys.argv[1])
     except IndexError:
@@ -37,11 +37,12 @@ def main():
             busStop = raw_input("ENTER THE STOP NUMBER >>> ")
             while len(busStop) != 4 or  not busStop.isdigit():
                 busStop = raw_input("ENTER THE STOP NUMBER >>> ")
+            jdata = sendRequest(busStop)
         except KeyboardInterrupt:
             print "\nBye Bye!"
             exit()
     finally:
-        jdata = sendRequest(busStop)
+        
         data = decodeJson(jdata)
         busSchedule(data)
 
