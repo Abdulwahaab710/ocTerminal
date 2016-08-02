@@ -7,9 +7,6 @@ def decodeJson(jfile):
     return json.loads(jfile)
 
 def sendRequest(busStop):
-    if busStop == "":
-        busStop = raw_input("ENTER THE STOP NUMBER")
-
     return urllib2.urlopen("http://abdulwahaab.ca/octranspo/index.php?busNo="+str(busStop)).read()
 
 def busSchedule(data):
@@ -32,9 +29,20 @@ def busSchedule(data):
 
 
 def main():
-    jdata = sendRequest(sys.argv[1])
-    data = decodeJson(jdata)
-    busSchedule(data)
+    try:
+        jdata = sendRequest(sys.argv[1])
+    except IndexError:
+        try:
+            busStop = raw_input("ENTER THE STOP NUMBER >>> ")
+            while len(busStop) != 4 or  not busStop.isdigit():
+                busStop = raw_input("ENTER THE STOP NUMBER >>> ")
+        except KeyboardInterrupt:
+            print "\nBye Bye!"
+            exit()
+    finally:
+        jdata = sendRequest(busStop)
+        data = decodeJson(jdata)
+        busSchedule(data)
 
 
 if __name__ == "__main__":
