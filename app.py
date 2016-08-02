@@ -6,6 +6,9 @@ import urllib2, json, sys
 def decodeJson(jfile):
     return json.loads(jfile)
 
+def sendPost(busStop):
+    dic = {"appID":"", "apiKey":"", "stopNo":"", "format":"json"}
+
 def sendRequest(busStop):
     return urllib2.urlopen("http://abdulwahaab.ca/octranspo/index.php?busNo="+str(busStop)).read()
 
