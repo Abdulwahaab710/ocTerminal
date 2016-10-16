@@ -70,6 +70,7 @@ def busSchedule(data):
 
 
 def main():
+    jdata = ""
     try:
         jdata = sendRequest(sys.argv[1])
     except IndexError:
