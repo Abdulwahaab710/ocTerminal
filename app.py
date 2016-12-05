@@ -16,6 +16,11 @@ def getApiKeyAndAppId(jfile):
         data = ''
         with open(jfile) as data_file:
             data = json.load(data_file)
+        if (
+            data['apiKey'] == 'Your API key' or data['appId'] == 'Your APP ID'
+        ):
+            print 'invalid key, or the key doesn\'t exists'
+            exit()
         return [data['apiKey'], data['appId']]
     except KeyError:
         print 'invalid key, or the key doesn\'t exists'
