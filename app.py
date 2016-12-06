@@ -19,17 +19,17 @@ def getApiKeyAndAppId(jfile):
         if (
             data['apiKey'] == 'Your API key' or data['appId'] == 'Your APP ID'
         ):
-            raise NameError('invalid key, or the key doesn\'t exists')
+            raise NameError('Invalid key, or the key doesn\'t exists')
         else:
             return [data['apiKey'], data['appId']]
     except KeyError:
-        print 'invalid key, or the key doesn\'t exists'
+        print 'Invalid key, or the key doesn\'t exists'
         exit()
     except IOError:
-        print 'invalid file name, or the file doesn\'t exists'
+        print 'Invalid file name, or the file doesn\'t exists'
         exit()
     except NameError:
-        print 'invalid key, or the key doesn\'t exists'
+        print 'Invalid key, or the key doesn\'t exists'
         sys.exit()
 
 
@@ -92,10 +92,6 @@ def main():
         except KeyboardInterrupt:
             print "\nBye Bye!"
             exit()
-    # finally:
-    #     # print jdata
-    #     # data = decodeJson(jdata)
-    #     busSchedule(jdata)
 
 
 if __name__ == "__main__":
