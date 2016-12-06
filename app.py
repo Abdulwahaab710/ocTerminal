@@ -19,15 +19,18 @@ def getApiKeyAndAppId(jfile):
         if (
             data['apiKey'] == 'Your API key' or data['appId'] == 'Your APP ID'
         ):
-            print 'invalid key, or the key doesn\'t exists'
-            exit()
-        return [data['apiKey'], data['appId']]
+            raise NameError('invalid key, or the key doesn\'t exists')
+        else:
+            return [data['apiKey'], data['appId']]
     except KeyError:
         print 'invalid key, or the key doesn\'t exists'
         exit()
     except IOError:
         print 'invalid file name, or the file doesn\'t exists'
         exit()
+    except NameError:
+        print 'invalid key, or the key doesn\'t exists'
+        sys.exit()
 
 
 def sendRequest(busStop):
@@ -78,19 +81,21 @@ def main():
     jdata = ""
     try:
         jdata = sendRequest(sys.argv[1])
+        busSchedule(jdata)
     except IndexError:
         try:
             busStop = raw_input("ENTER THE STOP NUMBER >>> ")
             while len(busStop) != 4 or not busStop.isdigit():
                 busStop = raw_input("ENTER THE STOP NUMBER >>> ")
             jdata = sendRequest(busStop)
+            busSchedule(jdata)
         except KeyboardInterrupt:
             print "\nBye Bye!"
             exit()
-    finally:
-        # print jdata
-        # data = decodeJson(jdata)
-        busSchedule(jdata)
+    # finally:
+    #     # print jdata
+    #     # data = decodeJson(jdata)
+    #     busSchedule(jdata)
 
 
 if __name__ == "__main__":
