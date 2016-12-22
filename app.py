@@ -35,15 +35,20 @@ def getApiKeyAndAppId(jfile):
 
 def sendRequest(busStop):
     apiKeyAndAppid = getApiKeyAndAppId('apiKey.json')
-    return requests.post(
-        'https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes',
-        data={
-            "appID": apiKeyAndAppid[1],
-            "apiKey": apiKeyAndAppid[0],
-            "stopNo": busStop,
-            "format": "json"
-        }
-    ).json()
+    try:
+        r = requests.post(
+            'https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes',
+            data={
+                "appID": apiKeyAndAppid[1],
+                "apiKey": apiKeyAndAppid[0],
+                "stopNo": busStop,
+                "format": "json"
+            }
+        ).json()
+        return r
+    except requests.exceptions.ConnectionError:
+        print "There is no Internet connection :("
+        exit()
 
 
 def busSchedule(data):
