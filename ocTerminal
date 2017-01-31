@@ -79,7 +79,14 @@ def busSchedule(data):
                             bus['Trips'][trip]['AdjustedScheduleTime']
                         ) + " minutes"
                     except:
-                        print trip
+                        # print bus['Trips'][trip]['AdjustedScheduleTime']
+                        print "\033[32mTrip Destination: \033[0m" + str(
+                            bus['Trips'][trip]['TripDestination'].encode('ascii', 'ignore')
+                        )
+                        print "\033[32mAdjusted Schedule Time: \033[0m " + str(
+                            bus['Trips'][trip]['AdjustedScheduleTime'].encode('ascii', 'ignore')
+                        ) + " minutes"
+
 
 
 def main():
