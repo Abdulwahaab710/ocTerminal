@@ -14,7 +14,7 @@ def decodeJson(jfile):
 def sendRequest(busStop):
     dotenv.load()
     try:
-        if (dotenv.get('APP_ID') or dotenv.get('API_KEY')):
+        if (not(dotenv.get('APP_ID') or dotenv.get('API_KEY'))):
             raise NameError('MissingAPIandAPPID')
         r = requests.post(
             'https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes',
