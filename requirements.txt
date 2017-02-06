@@ -1,1 +1,2 @@
-requests
+requests==2.12.4
+python-env=1.0.0
