@@ -4,43 +4,23 @@
 import requests
 import json
 import sys
+import dotenv
 
 
 def decodeJson(jfile):
     return json.loads(jfile)
 
 
-def getApiKeyAndAppId(jfile):
-    '''(str) -> (str)'''
-    try:
-        data = ''
-        with open(jfile) as data_file:
-            data = json.load(data_file)
-        if (
-            data['apiKey'] == 'Your API key' or data['appId'] == 'Your APP ID'
-        ):
-            raise NameError('Invalid key, or the key doesn\'t exists')
-        else:
-            return [data['apiKey'], data['appId']]
-    except KeyError:
-        print 'Invalid key, or the key doesn\'t exists'
-        exit()
-    except IOError:
-        print 'Invalid file name, or the file doesn\'t exists'
-        exit()
-    except NameError:
-        print 'Invalid key, or the key doesn\'t exists'
-        sys.exit()
-
-
 def sendRequest(busStop):
-    apiKeyAndAppid = getApiKeyAndAppId('apiKey.json')
+    dotenv.load()
     try:
+        if (dotenv.get('APP_ID') or dotenv.get('API_KEY')):
+            raise NameError('MissingAPIandAPPID')
         r = requests.post(
             'https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes',
             data={
-                "appID": apiKeyAndAppid[1],
-                "apiKey": apiKeyAndAppid[0],
+                "appID": dotenv.get('APP_ID'),
+                "apiKey": dotenv.get('API_KEY'),
                 "stopNo": busStop,
                 "format": "json"
             }
@@ -81,12 +61,15 @@ def busSchedule(data):
                     except:
                         # print bus['Trips'][trip]['AdjustedScheduleTime']
                         print "\033[32mTrip Destination: \033[0m" + str(
-                            bus['Trips'][trip]['TripDestination'].encode('ascii', 'ignore')
+                            bus['Trips'][trip]['TripDestination'].encode(
+                                'ascii', 'ignore'
+                            )
                         )
                         print "\033[32mAdjusted Schedule Time: \033[0m " + str(
-                            bus['Trips'][trip]['AdjustedScheduleTime'].encode('ascii', 'ignore')
+                            bus['Trips'][trip]['AdjustedScheduleTime'].encode(
+                                'ascii', 'ignore'
+                            )
                         ) + " minutes"
-
 
 
 def main():
