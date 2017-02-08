@@ -8,6 +8,7 @@ import dotenv
 
 # Constants
 ESC_CHAR = '\033'
+COLOR_GREEN = '32m'
 
 
 def decodeJson(jfile):
@@ -40,39 +41,45 @@ def busSchedule(data, busNumbers):
         data['GetRouteSummaryForStopResult']['StopDescription']
     )
     if 'Trips' in data['GetRouteSummaryForStopResult']['Routes']['Route']:
-        print "{0}[1;4;32mRoute {1}{0}[0m".format(
+        print "{0}[1;4;{2}Route {1}{0}[0m".format(
             ESC_CHAR,
-            data['GetRouteSummaryForStopResult']['Routes']['Route']['RouteNo']
+            data['GetRouteSummaryForStopResult']['Routes']['Route']['RouteNo'],
+            COLOR_GREEN
         )
         route = data['GetRouteSummaryForStopResult']['Routes']['Route']
         trips = route['Trips']['Trip']
         for trip in trips:
-            print "{0}[32mTrip Destination: {0}[0m{1}".format(
+            print "{0}[{2}Trip Destination: {0}[0m{1}".format(
                 ESC_CHAR,
-                trip['TripDestination']
+                trip['TripDestination'],
+                COLOR_GREEN
             )
-            print "{0}[32mAdjusted Schedule Time: {0}[0m {1} minutes".format(
+            print "{0}[{2}Adjusted Schedule Time: {0}[0m {1} minutes".format(
                 ESC_CHAR,
-                trip['AdjustedScheduleTime']
+                trip['AdjustedScheduleTime'],
+                COLOR_GREEN
             )
     else:
         for bus in data['GetRouteSummaryForStopResult']['Routes']['Route']:
             if 'Trips' in bus and len(bus['Trips']) > 0:
-                print "{0}[1;4;32mRoute {1}{0}[0m".format(
+                print "{0}[1;4;{2}Route {1}{0}[0m".format(
                     ESC_CHAR,
-                    str(bus['RouteNo'])
+                    str(bus['RouteNo']),
+                    COLOR_GREEN
                 )
                 for trip in range(len(bus['Trips'])):
                     # try:
-                    print "{0}[32mTrip Destination: {0}[0m{1}".format(
+                    print "{0}[{2}Trip Destination: {0}[0m{1}".format(
                         ESC_CHAR,
-                        bus['Trips'][trip]['TripDestination'].encode('utf-8')
+                        bus['Trips'][trip]['TripDestination'].encode('utf-8'),
+                        COLOR_GREEN
                     )
                     print str(
-                        "{0}[32mAdjusted Schedule Time: {0}[0m {1} minutes"
+                        "{0}[{2}Adjusted Schedule Time: {0}[0m {1} minutes"
                     ).format(
                         ESC_CHAR,
-                        bus['Trips'][trip]['AdjustedScheduleTime']
+                        bus['Trips'][trip]['AdjustedScheduleTime'],
+                        COLOR_GREEN
                     )
 
 
