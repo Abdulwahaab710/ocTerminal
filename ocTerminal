@@ -37,56 +37,64 @@ def sendRequest(busStop):
 
 
 def busSchedule(data, busNumbers):
-    print ("{} - {}").format(
-        data['GetRouteSummaryForStopResult']['StopNo'],
-        data['GetRouteSummaryForStopResult']['StopDescription']
+    print (
+        "{} - {}".format(
+            data['GetRouteSummaryForStopResult']['StopNo'],
+            data['GetRouteSummaryForStopResult']['StopDescription']
+        )
     )
     if 'Trips' in data['GetRouteSummaryForStopResult']['Routes']['Route']:
-        print("{0}[1;4;{2}Route {1}{0}{3}").format(
+        print("{0}[1;4;{2}Route {1}{0}{3}".format(
             ESC_CHAR,
             data['GetRouteSummaryForStopResult']['Routes']['Route']['RouteNo'],
             COLOR_GREEN,
             RESET
+            )
         )
         route = data['GetRouteSummaryForStopResult']['Routes']['Route']
         trips = route['Trips']['Trip']
         for trip in trips:
-            print ("{0}[{2}Trip Destination: {0}{3}{1}").format(
+            print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
                 ESC_CHAR,
                 trip['TripDestination'],
                 COLOR_GREEN,
                 RESET
+                )
             )
-            print ("{0}[{2}Adjusted Schedule Time: {0}{3} {1} minutes").format(
+            print ("{0}[{2}Adjusted Schedule Time: {0}{3} {1} minutes".format(
                 ESC_CHAR,
                 trip['AdjustedScheduleTime'],
                 COLOR_GREEN,
                 RESET
+                )
             )
     else:
         for bus in data['GetRouteSummaryForStopResult']['Routes']['Route']:
             if 'Trips' in bus and len(bus['Trips']) > 0:
-                print ("{0}[1;4;{2}Route {1}{0}{3}").format(
+                print ("{0}[1;4;{2}Route {1}{0}{3}".format(
                     ESC_CHAR,
                     str(bus['RouteNo']),
                     COLOR_GREEN,
                     RESET
+                    )
                 )
                 for trip in range(len(bus['Trips'])):
                     # try:
-                    print ("{0}[{2}Trip Destination: {0}{3}{1}").format(
+                    print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
                         ESC_CHAR,
                         bus['Trips'][trip]['TripDestination'].encode('utf-8'),
                         COLOR_GREEN,
                         RESET
+                        )
                     )
-                    print (
+                    print ((
                         "{0}[{2}Adjusted Schedule Time: {0}{3} {1} minutes"
                     ).format(
                         ESC_CHAR,
                         bus['Trips'][trip]['AdjustedScheduleTime'],
                         COLOR_GREEN,
                         RESET
+                        )
                     )
 
 
