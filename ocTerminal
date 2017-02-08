@@ -6,6 +6,9 @@ import json
 import sys
 import dotenv
 
+# Constants
+ESC_CHAR = '\033'
+
 
 def decodeJson(jfile):
     return json.loads(jfile)
@@ -37,32 +40,38 @@ def busSchedule(data, busNumbers):
         data['GetRouteSummaryForStopResult']['StopDescription']
     )
     if 'Trips' in data['GetRouteSummaryForStopResult']['Routes']['Route']:
-        print "\033[1;4;32mRoute {}\033[0m".format(
+        print "{0}[1;4;32mRoute {1}{0}[0m".format(
+            ESC_CHAR,
             data['GetRouteSummaryForStopResult']['Routes']['Route']['RouteNo']
         )
         route = data['GetRouteSummaryForStopResult']['Routes']['Route']
         trips = route['Trips']['Trip']
         for trip in trips:
-            print "\033[32mTrip Destination: \033[0m{}".format(
+            print "{0}[32mTrip Destination: {0}[0m{1}".format(
+                ESC_CHAR,
                 trip['TripDestination']
             )
-            print "\033[32mAdjusted Schedule Time: \033[0m {} minutes".format(
+            print "{0}[32mAdjusted Schedule Time: {0}[0m {1} minutes".format(
+                ESC_CHAR,
                 trip['AdjustedScheduleTime']
             )
     else:
         for bus in data['GetRouteSummaryForStopResult']['Routes']['Route']:
             if 'Trips' in bus and len(bus['Trips']) > 0:
-                print "\033[1;4;32mRoute {}\033[0m".format(
+                print "{0}[1;4;32mRoute {1}{0}[0m".format(
+                    ESC_CHAR,
                     str(bus['RouteNo'])
                 )
                 for trip in range(len(bus['Trips'])):
                     # try:
-                    print "\033[32mTrip Destination: \033[0m{}".format(
+                    print "{0}[32mTrip Destination: {0}[0m{1}".format(
+                        ESC_CHAR,
                         bus['Trips'][trip]['TripDestination'].encode('utf-8')
                     )
                     print str(
-                        "\033[32mAdjusted Schedule Time: \033[0m {} minutes"
+                        "{0}[32mAdjusted Schedule Time: {0}[0m {1} minutes"
                     ).format(
+                        ESC_CHAR,
                         bus['Trips'][trip]['AdjustedScheduleTime']
                     )
 
