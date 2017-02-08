@@ -92,6 +92,7 @@ def busSchedule(data, busNumbers):
 
 def main():
     jdata = ""
+    busNumber = []
     if len(sys.argv) > 2:
         busNumber = sys.argv[2:len(sys.argv)]
     try:
