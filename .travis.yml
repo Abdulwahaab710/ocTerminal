@@ -4,4 +4,7 @@ before_install:
     - pip install python-env
 python:
     - "2.7"
-script: "python ocTerminal 8400"
+    - "3.5"
+script:
+    - "python ocTerminal 8400"
+    - "python3 ocTerminal 8400"
