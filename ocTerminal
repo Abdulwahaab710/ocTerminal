@@ -43,15 +43,16 @@ def busSchedule(data, busNumbers):
             data['GetRouteSummaryForStopResult']['StopDescription']
         )
     )
-    if 'Trips' in data['GetRouteSummaryForStopResult']['Routes']['Route']:
+    route = data['GetRouteSummaryForStopResult']['Routes']['Route']
+    if 'Trips' in route:
+        print "if"
         print ("{0}[1;4;{2}Route {1}{0}{3}".format(
             ESC_CHAR,
-            data['GetRouteSummaryForStopResult']['Routes']['Route']['RouteNo'],
+            route['RouteNo'],
             COLOR_GREEN,
             RESET
             )
         )
-        route = data['GetRouteSummaryForStopResult']['Routes']['Route']
         trips = route['Trips']['Trip']
         for trip in trips:
             print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
@@ -69,7 +70,8 @@ def busSchedule(data, busNumbers):
                 )
             )
     else:
-        for bus in data['GetRouteSummaryForStopResult']['Routes']['Route']:
+        print "else"
+        for bus in route:
             if (
                 'Trips' in bus and
                 len(bus['Trips']) > 0 and
