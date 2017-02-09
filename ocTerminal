@@ -109,7 +109,7 @@ def main():
     busNumber = []
     if len(sys.argv) > 2:
         busNumber = sys.argv[2:len(sys.argv)]
-        busNumber = map(int, busNumber)
+        busNumber = list(map(int, busNumber))
     try:
         jdata = sendRequest(sys.argv[1])
         busSchedule(jdata, busNumber)
