@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import requests
-import json
 import sys
 import dotenv
 
@@ -10,10 +9,6 @@ import dotenv
 ESC_CHAR = '\033'
 COLOR_GREEN = '32m'
 RESET = '[0m'
-
-
-def decodeJson(jfile):
-    return json.loads(jfile)
 
 
 def sendRequest(busStop):
@@ -36,7 +31,7 @@ def sendRequest(busStop):
         exit()
 
 
-def busSchedule(data, busNumbers):
+def busSchedule(data, busNumbers=None):
     print (
         "{} - {}".format(
             data['GetRouteSummaryForStopResult']['StopNo'],
@@ -44,66 +39,39 @@ def busSchedule(data, busNumbers):
         )
     )
     route = data['GetRouteSummaryForStopResult']['Routes']['Route']
-    if 'Trips' in route:
-        print "if"
-        print ("{0}[1;4;{2}Route {1}{0}{3}".format(
-            ESC_CHAR,
-            route['RouteNo'],
-            COLOR_GREEN,
-            RESET
+    for bus in route:
+        if (
+            'Trips' in bus and
+            len(bus['Trips']) > 0 and
+            (
+                bus['RouteNo'] in busNumbers or
+                len(busNumbers) <= 0
             )
-        )
-        trips = route['Trips']['Trip']
-        for trip in trips:
-            print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
+        ):
+            print ("{0}[1;4;{2}Route {1}{0}{3}".format(
                 ESC_CHAR,
-                trip['TripDestination'],
+                str(bus['RouteNo']),
                 COLOR_GREEN,
                 RESET
                 )
             )
-            print ("{0}[{2}Adjusted Schedule Time: {0}{3} {1} minutes".format(
-                ESC_CHAR,
-                trip['AdjustedScheduleTime'],
-                COLOR_GREEN,
-                RESET
-                )
-            )
-    else:
-        print "else"
-        for bus in route:
-            if (
-                'Trips' in bus and
-                len(bus['Trips']) > 0 and
-                (
-                    bus['RouteNo'] in busNumbers or
-                    len(busNumbers) <= 0
-                )
-            ):
-                print ("{0}[1;4;{2}Route {1}{0}{3}".format(
+            for trip in range(len(bus['Trips'])):
+                print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
                     ESC_CHAR,
-                    str(bus['RouteNo']),
+                    bus['Trips'][trip]['TripDestination'].encode('utf-8'),
                     COLOR_GREEN,
                     RESET
                     )
                 )
-                for trip in range(len(bus['Trips'])):
-                    print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
-                        ESC_CHAR,
-                        bus['Trips'][trip]['TripDestination'].encode('utf-8'),
-                        COLOR_GREEN,
-                        RESET
-                        )
+                print ((
+                    "{0}[{2}Adjusted Schedule Time: {0}{3} {1} minutes"
+                ).format(
+                    ESC_CHAR,
+                    bus['Trips'][trip]['AdjustedScheduleTime'],
+                    COLOR_GREEN,
+                    RESET
                     )
-                    print ((
-                        "{0}[{2}Adjusted Schedule Time: {0}{3} {1} minutes"
-                    ).format(
-                        ESC_CHAR,
-                        bus['Trips'][trip]['AdjustedScheduleTime'],
-                        COLOR_GREEN,
-                        RESET
-                        )
-                    )
+                )
 
 
 def main():
