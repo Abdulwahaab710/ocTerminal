@@ -4,15 +4,16 @@
 import requests
 import sys
 import dotenv
+from os.path import join, dirname
 
 # Constants
 ESC_CHAR = '\033'
 COLOR_GREEN = '32m'
 RESET = '[0m'
+DOTENV_PATH = join(dirname(__file__), '.env')
 
 
 def sendRequest(busStop):
-    dotenv.load()
     try:
         if (not(dotenv.get('APP_ID') or dotenv.get('API_KEY'))):
             raise NameError('MissingAPIandAPPID')
@@ -50,7 +51,7 @@ def busSchedule(data, busNumbers=None):
         ):
             print ("{0}[1;4;{2}Route {1}{0}{3}".format(
                 ESC_CHAR,
-                str(bus['RouteNo']),
+                bus['RouteNo'],
                 COLOR_GREEN,
                 RESET
                 )
@@ -77,6 +78,7 @@ def busSchedule(data, busNumbers=None):
 def main():
     jdata = ""
     busNumber = []
+    dotenv.load(DOTENV_PATH)
     if len(sys.argv) > 2:
         busNumber = sys.argv[2:len(sys.argv)]
         busNumber = list(map(int, busNumber))
