@@ -55,10 +55,10 @@ def busSchedule(data, busNumbers=None):
                 RESET
                 )
             )
-            for trip in range(len(bus['Trips'])):
+            for trip in bus['Trips']:
                 print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
                     ESC_CHAR,
-                    bus['Trips'][trip]['TripDestination'].encode('utf-8'),
+                    trip['TripDestination'].encode('utf-8'),
                     COLOR_GREEN,
                     RESET
                     )
@@ -67,7 +67,7 @@ def busSchedule(data, busNumbers=None):
                     "{0}[{2}Adjusted Schedule Time: {0}{3} {1} minutes"
                 ).format(
                     ESC_CHAR,
-                    bus['Trips'][trip]['AdjustedScheduleTime'],
+                    trip['AdjustedScheduleTime'],
                     COLOR_GREEN,
                     RESET
                     )
