@@ -7,3 +7,5 @@ python:
     - "3.5"
 script:
     - "python ocTerminal 8400"
+    - "python ocTerminal 3000"
+    - "python ocTerminal 3036 8 98 97"
