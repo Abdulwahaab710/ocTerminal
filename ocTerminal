@@ -1,6 +1,7 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
+# import statements
 import requests
 import sys
 import dotenv
@@ -14,10 +15,15 @@ DOTENV_PATH = join(dirname(__file__), '.env')
 
 
 def sendRequest(busStop):
+    '''(int)->(dict)
+    This method send a POST request to the ocTranspo API
+    and it returns a dict
+    '''
+    dotenv.load()
     try:
         if (not(dotenv.get('APP_ID') or dotenv.get('API_KEY'))):
             raise NameError('MissingAPIandAPPID')
-        r = requests.post(
+        response = requests.post(
             'https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes',
             data={
                 "appID": dotenv.get('APP_ID'),
@@ -26,13 +32,16 @@ def sendRequest(busStop):
                 "format": "json"
             }
         ).json()
-        return r
+        return response
     except requests.exceptions.ConnectionError:
         print ("There is no Internet connection :(")
         exit()
 
 
 def busSchedule(data, busNumbers=None):
+    '''(dict, (list|None))->None
+    This method prints the bus schedule
+    '''
     print (
         "{} - {}".format(
             data['GetRouteSummaryForStopResult']['StopNo'],
@@ -56,7 +65,8 @@ def busSchedule(data, busNumbers=None):
                 RESET
                 )
             )
-            for trip in bus['Trips']:
+            if ('TripDestination' in bus['Trips']):
+                trip = bus['Trips']
                 print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
                     ESC_CHAR,
                     trip['TripDestination'].encode('utf-8'),
@@ -73,14 +83,35 @@ def busSchedule(data, busNumbers=None):
                     RESET
                     )
                 )
+            else:
+                for trip in bus['Trips']:
+                    print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
+                        ESC_CHAR,
+                        trip['TripDestination'].encode('utf-8'),
+                        COLOR_GREEN,
+                        RESET
+                        )
+                    )
+                    print ((
+                        "{0}[{2}Adjusted Schedule Time: {0}{3} {1} minutes"
+                    ).format(
+                        ESC_CHAR,
+                        trip['AdjustedScheduleTime'],
+                        COLOR_GREEN,
+                        RESET
+                        )
+                    )
 
 
 def main():
+    '''None -> None
+    This is our main
+    '''
     jdata = ""
     busNumber = []
     dotenv.load(DOTENV_PATH)
     if len(sys.argv) > 2:
-        busNumber = sys.argv[2:len(sys.argv)]
+        busNumber = sys.argv[2:]
         busNumber = list(map(int, busNumber))
     try:
         jdata = sendRequest(sys.argv[1])
