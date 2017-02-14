@@ -2,11 +2,11 @@
 #ocTerminal
 | Screenshot with bus specifications |
 | ---------------------------------- |
-| <img src='https://raw.githubusercontent.com/Abdulwahaab710/ocTerminal/master/screeenshot-with-bus-specifications.png' width=90%> |
+|![Screenshot with bus specifications](https://raw.githubusercontent.com/Abdulwahaab710/ocTerminal/master/screeenshot-with-bus-specifications.png)|
 
 | Screenshot without bus specifications |
 | ------------------------------------- |
-| <img src='https://raw.githubusercontent.com/Abdulwahaab710/ocTerminal/master/screeenshot-without-bus-specifications.png' width=90%> |
+|![Screenshot without bus specifications](https://raw.githubusercontent.com/Abdulwahaab710/ocTerminal/master/screeenshot-without-bus-specifications.png)|
 
 ocTerminal is a python script that allows you to check the bus schedule from the terminal
 
