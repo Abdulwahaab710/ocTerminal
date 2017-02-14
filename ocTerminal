@@ -1,6 +1,7 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
+# import statements
 import requests
 import sys
 import dotenv
@@ -12,16 +13,16 @@ COLOR_GREEN = '32m'
 RESET = '[0m'
 
 
-def handleArgs(args):
-    pass
-
-
 def sendRequest(busStop):
+    '''(int)->(dict)
+    This method send a POST request to the ocTranspo API
+    and it returns a dict
+    '''
     dotenv.load()
     try:
         if (not(dotenv.get('APP_ID') or dotenv.get('API_KEY'))):
             raise NameError('MissingAPIandAPPID')
-        r = requests.post(
+        response = requests.post(
             'https://api.octranspo1.com/v1.2/GetNextTripsForStopAllRoutes',
             data={
                 "appID": dotenv.get('APP_ID'),
@@ -30,13 +31,16 @@ def sendRequest(busStop):
                 "format": "json"
             }
         ).json()
-        return r
+        return response
     except requests.exceptions.ConnectionError:
         print ("There is no Internet connection :(")
         exit()
 
 
 def busSchedule(data, busNumbers=None):
+    '''(dict, (list|None))->None
+    This method prints the bus schedule
+    '''
     print (
         "{} - {}".format(
             data['GetRouteSummaryForStopResult']['StopNo'],
@@ -80,6 +84,9 @@ def busSchedule(data, busNumbers=None):
 
 
 def main():
+    '''None -> None
+    This is our main
+    '''
     jdata = ""
     busNumber = []
     if len(sys.argv) > 2:
