@@ -63,7 +63,8 @@ def busSchedule(data, busNumbers=None):
                 RESET
                 )
             )
-            for trip in bus['Trips']:
+            if ('TripDestination' in bus['Trips']):
+                trip = bus['Trips']
                 print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
                     ESC_CHAR,
                     trip['TripDestination'].encode('utf-8'),
@@ -80,6 +81,24 @@ def busSchedule(data, busNumbers=None):
                     RESET
                     )
                 )
+            else:
+                for trip in bus['Trips']:
+                    print ("{0}[{2}Trip Destination: {0}{3}{1}".format(
+                        ESC_CHAR,
+                        trip['TripDestination'].encode('utf-8'),
+                        COLOR_GREEN,
+                        RESET
+                        )
+                    )
+                    print ((
+                        "{0}[{2}Adjusted Schedule Time: {0}{3} {1} minutes"
+                    ).format(
+                        ESC_CHAR,
+                        trip['AdjustedScheduleTime'],
+                        COLOR_GREEN,
+                        RESET
+                        )
+                    )
 
 
 def main():
