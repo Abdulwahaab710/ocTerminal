@@ -14,7 +14,7 @@ First clone the repository
 Rename **.env-sample** => **.env**
 ```bash
   mv .env-sample .env
-  # Adding to the PATH
+  # Adding the directory to the PATH
   path=$(pwd)/ocTerminal
   PATH=~$path:$PATH
 ```
