@@ -4,11 +4,16 @@
 import requests
 import sys
 import dotenv
+# import getopt
 
 # Constants
 ESC_CHAR = '\033'
 COLOR_GREEN = '32m'
 RESET = '[0m'
+
+
+def handleArgs(args):
+    pass
 
 
 def sendRequest(busStop):
@@ -78,7 +83,7 @@ def main():
     jdata = ""
     busNumber = []
     if len(sys.argv) > 2:
-        busNumber = sys.argv[2:len(sys.argv)]
+        busNumber = sys.argv[2:]
         busNumber = list(map(int, busNumber))
     try:
         jdata = sendRequest(sys.argv[1])
