@@ -23,9 +23,9 @@ Add you API_KEY and APP_ID to the .env file
 ## Run
 To run ocTerminal:
 ```bash
-  python ocTerminal <bus stop\station number>
+  python ocTerminal <bus stop\station number> [<bus numbers>]
 ```
 Example
 ```bash
-  python pcTerminal 8400
+  python pcTerminal 3000 85 95 98
 ```
