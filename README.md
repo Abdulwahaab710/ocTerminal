@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/Abdulwahaab710/ocTerminal.svg?branch=master)](https://travis-ci.org/Abdulwahaab710/ocTerminal)
 #ocTerminal
-![screenshot](https://github.com/Abdulwahaab710/ocTerminal/raw/master/screenshot.png)
+| Screenshot with bus specifications | Screenshot without bus specifications |
+| ---------------------------------- | ------------------------------------- |
+| <img src='https://raw.githubusercontent.com/Abdulwahaab710/ocTerminal/master/screeenshot-with-bus-specifications.png' width=200> | <img src='https://raw.githubusercontent.com/Abdulwahaab710/ocTerminal/master/screeenshot-without-bus-specifications.png' width=200> |
 
 ocTerminal is a python script that allows you to check the bus schedule from the terminal
 
