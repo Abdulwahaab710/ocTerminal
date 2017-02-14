@@ -14,6 +14,9 @@ First clone the repository
 Rename **.env-sample** => **.env**
 ```bash
   mv .env-sample .env
+  # Adding to the PATH
+  path=$(pwd)/ocTerminal
+  PATH=~$path:$PATH
 ```
 Add you API_KEY and APP_ID to the .env file
 
