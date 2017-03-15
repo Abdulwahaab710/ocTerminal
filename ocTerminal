@@ -19,7 +19,6 @@ def sendRequest(busStop):
     This method send a POST request to the ocTranspo API
     and it returns a dict
     '''
-    dotenv.load()
     try:
         if (not(dotenv.get('APP_ID') or dotenv.get('API_KEY'))):
             raise NameError('MissingAPIandAPPID')
