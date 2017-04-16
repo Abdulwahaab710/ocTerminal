@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/Abdulwahaab710/ocTerminal.svg?branch=master)](https://travis-ci.org/Abdulwahaab710/ocTerminal)
+
 #ocTerminal
+
 | Screenshot with bus specifications |
 | ---------------------------------- |
 |![Screenshot with bus specifications](https://raw.githubusercontent.com/Abdulwahaab710/ocTerminal/master/screeenshot-with-bus-specifications.png)|
